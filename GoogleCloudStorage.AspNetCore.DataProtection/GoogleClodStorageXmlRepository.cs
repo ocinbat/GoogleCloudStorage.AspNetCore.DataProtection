@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Storage.v1.Data;
@@ -17,15 +16,15 @@ namespace GoogleCloudStorage.AspNetCore.DataProtection
     /// </summary>
     public class GoogleClodStorageXmlRepository : IXmlRepository
     {
-        private const string DataProtectionBucketName = "AspNetCore-DataProtection";
-
         private readonly Bucket _bucket;
         private readonly StorageClient _client;
+        private readonly string _bucketName;
 
-        public GoogleClodStorageXmlRepository(GoogleCredential credential, string projectId)
+        public GoogleClodStorageXmlRepository(GoogleCredential credential, string projectId, string bucketName)
         {
+            _bucketName = bucketName;
             _client = StorageClient.Create(credential);
-            _bucket = _client.GetBucket(DataProtectionBucketName) ?? _client.CreateBucket(DataProtectionBucketName, projectId);
+            _bucket = _client.GetBucket(_bucketName) ?? _client.CreateBucket(_bucketName, projectId);
         }
 
         /// <summary>Gets all top-level XML elements in the repository.</summary>
@@ -39,7 +38,7 @@ namespace GoogleCloudStorage.AspNetCore.DataProtection
 
             List<XElement> elements = new List<XElement>();
 
-            foreach (Object @object in _client.ListObjects(DataProtectionBucketName, null, options))
+            foreach (Object @object in _client.ListObjects(_bucketName, null, options))
             {
                 using (var stream = new MemoryStream())
                 {
@@ -70,7 +69,7 @@ namespace GoogleCloudStorage.AspNetCore.DataProtection
 
             using (var stream = new MemoryStream(Encoding.Unicode.GetBytes(content)))
             {
-                _client.UploadObject(DataProtectionBucketName, Guid.NewGuid().ToString(), "text/plain", stream);
+                _client.UploadObject(_bucketName, Guid.NewGuid().ToString(), "text/plain", stream);
             }
         }
     }

@@ -14,13 +14,13 @@ namespace GoogleCloudStorage.AspNetCore.DataProtection
         /// <param name="serviceAccountKeyFilePath">The JSON key file path that holds credential data for a service account.</param>
         /// <param name="projectId">The Google Cloud Project Id.</param>
         /// <returns>A reference to the <see cref="IDataProtectionBuilder" /> after this operation has completed.</returns>
-        public static IDataProtectionBuilder PersistKeysToGoogleCloudStorage(this IDataProtectionBuilder builder, string serviceAccountKeyFilePath, string projectId)
+        public static IDataProtectionBuilder PersistKeysToGoogleCloudStorage(this IDataProtectionBuilder builder, string serviceAccountKeyFilePath, string projectId, string bucketName)
         {
             GoogleCredential credential = GoogleCredential.FromFile(serviceAccountKeyFilePath);
 
             builder.Services.Configure<KeyManagementOptions>(options =>
             {
-                options.XmlRepository = new GoogleClodStorageXmlRepository(credential, projectId);
+                options.XmlRepository = new GoogleClodStorageXmlRepository(credential, projectId, bucketName);
             });
 
             return builder;

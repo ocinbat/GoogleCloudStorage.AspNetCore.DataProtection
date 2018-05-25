@@ -4,10 +4,7 @@
     <PackageId>GoogleCloudStorage.AspNetCore.DataProtection</PackageId>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Google Cloud Storage support as key store.</Description>
-    <VersionPrefix Condition="'$(ExperimentalVersionPrefix)' != ''">$(ExperimentalVersionPrefix)</VersionPrefix>
-    <VersionSuffix Condition="'$(ExperimentalVersionSuffix)' != ''">$(ExperimentalVersionSuffix)</VersionSuffix>
-    <VerifyVersion Condition="'$(ExperimentalVersionPrefix)' != ''">false</VerifyVersion>
-    <PackageVersion>0.0.1</PackageVersion>
+    <PackageVersion>0.0.2</PackageVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageTags>aspnetcore;dataprotection;google cloud storage</PackageTags>
